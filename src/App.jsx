@@ -569,7 +569,7 @@ export default function App() {
                   <div className="two"><label><span>Pickup date *</span><input type="date" value={customer.pickupDate} onChange={(event) => { const nextDate = event.target.value; const times = getPickupTimes(nextDate); setCustomer({ ...customer, pickupDate: nextDate, pickupTime: times.includes(customer.pickupTime) ? customer.pickupTime : times[0] }); }} /><p className="hint">Please order {business.noticeText} ahead.</p></label><label><span>Pickup time</span><select value={customer.pickupTime} onChange={(event) => setCustomer({ ...customer, pickupTime: event.target.value })}>{getPickupTimes(customer.pickupDate).map((time) => <option key={time}>{time}</option>)}</select></label></div>
                   <label><span>Extra notes</span><textarea value={customer.notes} onChange={(event) => setCustomer({ ...customer, notes: event.target.value })} placeholder="Example: Theme is butterflies, add gold details, send me payment link." /></label>
                   <button type="submit" className="btn btn-pink" disabled={sending || !customer.name || !customer.phone || cart.length === 0}>{sending ? "Sending..." : "Send Email Request"}</button>
-                  <p className="hint">This sends the request directly to {business.email}. Final pickup availability and payment should be confirmed by {business.name}.</p>
+                  <p className="hint">This sends the request directly to {business.email}. Final pickup availability and payment will be confirmed when available via instagram by {business.name}.</p>
                 </form>
               </div>
 
