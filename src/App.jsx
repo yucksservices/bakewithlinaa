@@ -30,8 +30,8 @@ const products = [
     description: "A cute custom heart cake with your colors, writing, and decoration style.",
     image: heartCakeImg,
     options: [
-      { label: "6 inch Heart Cake", serves: "6-8", price: 40 },
-      { label: "8 inch Heart Cake", serves: "10-14", price: 55 },
+      { label: "6 inch Heart Cake", serves: "6-8", price: 45 },
+      { label: "8 inch Heart Cake", serves: "10-14", price: 60 },
     ],
   },
   {
@@ -42,9 +42,9 @@ const products = [
     description: "Classic round cake, perfect for birthdays, parties, and simple custom designs.",
     image: roundCakeImg,
     options: [
-      { label: "6 inch Round Cake", serves: "6-8", price: 40 },
-      { label: "8 inch Round Cake", serves: "10-14", price: 55 },
-      { label: "10 inch Round Cake", serves: "18-24", price: 65 },
+      { label: "6 inch Round Cake", serves: "6-8", price: 45 },
+      { label: "8 inch Round Cake", serves: "10-14", price: 60 },
+      { label: "10 inch Round Cake", serves: "18-24", price: 75 },
     ],
   },
   {
