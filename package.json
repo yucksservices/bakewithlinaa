@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "vite",
+    "server": "node server/server.js",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "express": "latest",
+    "cors": "latest",
+    "dotenv": "latest",
+    "multer": "latest",
+    "nodemailer": "latest",
+    "concurrently": "latest"
+  },
+  "devDependencies": {}
+}
