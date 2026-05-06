@@ -7,176 +7,152 @@ import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 
+dotenv.config();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DATA_DIR = path.join(__dirname, "data");
-const REVIEWS_FILE = path.join(DATA_DIR, "reviews.json");
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const allowedOrigins = (process.env.FRONTEND_ORIGIN || "http://localhost:5173")
-  .split(",")
-  .map((origin) => origin.trim());
-
-app.use(
-  cors({
-    origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  })
-);
-
-app.use(express.json({ limit: "1mb" }));
+const DATA_DIR = path.join(__dirname, "data");
+const REVIEWS_FILE = path.join(DATA_DIR, "reviews.json");
+const DIST_DIR = path.join(__dirname, "../dist");
 
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
     fileSize: 10 * 1024 * 1024,
-    files: 5,
+    files: 10,
   },
 });
 
-function escapeHtml(text = "") {
-  return String(text)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
-function cleanText(value, maxLength = 500) {
-  return String(value || "")
-    .replace(/[\u0000-\u001f\u007f]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .slice(0, maxLength);
-}
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-async function ensureReviewFile() {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-
+async function ensureDataFile() {
   try {
+    await fs.mkdir(DATA_DIR, { recursive: true });
     await fs.access(REVIEWS_FILE);
   } catch {
-    await fs.writeFile(REVIEWS_FILE, "[]\n", "utf8");
+    await fs.writeFile(REVIEWS_FILE, "[]", "utf8");
   }
 }
 
 async function readReviews() {
-  await ensureReviewFile();
+  await ensureDataFile();
 
   try {
-    const raw = await fs.readFile(REVIEWS_FILE, "utf8");
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (error) {
-    console.error("Review read error:", error);
+    const data = await fs.readFile(REVIEWS_FILE, "utf8");
+    const reviews = JSON.parse(data);
+
+    if (Array.isArray(reviews)) {
+      return reviews;
+    }
+
+    return [];
+  } catch {
     return [];
   }
 }
 
 async function writeReviews(reviews) {
-  await ensureReviewFile();
+  await ensureDataFile();
   await fs.writeFile(REVIEWS_FILE, JSON.stringify(reviews, null, 2), "utf8");
 }
 
-function makeHtmlEmail(fields) {
-  return `
-    <div style="font-family:Arial,sans-serif;line-height:1.55;color:#2b1220;">
-      <h2 style="color:#e93d88;">New BakeWithLinaa Order Request</h2>
-      <p><strong>Name:</strong> ${escapeHtml(fields.customerName)}</p>
-      <p><strong>Phone:</strong> ${escapeHtml(fields.customerPhone)}</p>
-      <p><strong>Instagram:</strong> ${escapeHtml(fields.customerInstagram || "Not provided")}</p>
-      <p><strong>Pickup:</strong> ${escapeHtml(fields.pickupDate)} at ${escapeHtml(fields.pickupTime)}</p>
-      <hr />
-      <h3>Order Summary</h3>
-      <pre style="white-space:pre-wrap;background:#fff2f8;border:1px solid #ffd8ea;border-radius:12px;padding:14px;">${escapeHtml(fields.orderSummary)}</pre>
-      <p style="font-size:13px;color:#777;">This email was sent from the BakeWithLinaa website order form.</p>
-    </div>
-  `;
+function createTransporter() {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
+    throw new Error("Missing EMAIL_USER or EMAIL_APP_PASSWORD environment variable.");
+  }
+
+  return nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_APP_PASSWORD,
+    },
+  });
+}
+
+function buildOrderText(body) {
+  if (body.orderSummary) return body.orderSummary;
+  if (body["Order Summary"]) return body["Order Summary"];
+
+  return Object.entries(body)
+    .map(([key, value]) => `${key}: ${value}`)
+    .join("\n");
 }
 
 app.get("/api/health", (req, res) => {
-  res.json({ ok: true, message: "BakeWithLinaa backend is running." });
+  res.json({
+    ok: true,
+    message: "BakeWithLinaa backend is running.",
+  });
 });
 
 app.get("/api/reviews", async (req, res) => {
-  const reviews = await readReviews();
-  res.json({ ok: true, reviews });
-});
-
-app.post("/api/reviews", async (req, res) => {
   try {
-    const name = cleanText(req.body.name, 60);
-    const text = cleanText(req.body.text, 600);
-    const rating = Math.min(5, Math.max(1, Number.parseInt(req.body.rating, 10) || 5));
-
-    if (!name || !text) {
-      return res.status(400).json({
-        ok: false,
-        message: "Please include a name and review.",
-      });
-    }
-
-    const review = {
-      id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-      name,
-      rating,
-      text,
-      date: new Date().toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      }),
-    };
-
-    const currentReviews = await readReviews();
-    const updatedReviews = [review, ...currentReviews].slice(0, 200);
-    await writeReviews(updatedReviews);
-
-    res.json({ ok: true, review });
+    const reviews = await readReviews();
+    res.json({ reviews });
   } catch (error) {
-    console.error("Review save error:", error);
+    console.error("Review read error:", error);
     res.status(500).json({
       ok: false,
-      message: "Review could not be saved.",
+      message: "Could not load reviews.",
     });
   }
 });
 
-app.post("/api/order", upload.array("inspirationPhotos", 5), async (req, res) => {
+app.post("/api/reviews", async (req, res) => {
   try {
-    const { customerName, customerPhone, pickupDate, pickupTime, orderSummary } = req.body;
+    const { name, rating, text } = req.body;
 
-    if (!customerName || !customerPhone || !pickupDate || !pickupTime || !orderSummary) {
+    if (!name || !text) {
       return res.status(400).json({
         ok: false,
-        message: "Missing required order information.",
+        message: "Name and review text are required.",
       });
     }
 
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
-      return res.status(500).json({
-        ok: false,
-        message: "Email backend is missing EMAIL_USER or EMAIL_APP_PASSWORD in .env.",
-      });
-    }
+    const review = {
+      id: Date.now(),
+      name: String(name).trim(),
+      rating: Number(rating) || 5,
+      text: String(text).trim(),
+      date: new Date().toLocaleDateString(),
+    };
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_APP_PASSWORD,
-      },
+    const reviews = await readReviews();
+    const updatedReviews = [review, ...reviews];
+
+    await writeReviews(updatedReviews);
+
+    res.json({
+      ok: true,
+      review,
     });
+  } catch (error) {
+    console.error("Review save error:", error);
+    res.status(500).json({
+      ok: false,
+      message: "Could not save review.",
+    });
+  }
+});
+
+async function handleOrderRequest(req, res) {
+  try {
+    const transporter = createTransporter();
+
+    const orderText = buildOrderText(req.body);
 
     const attachments = (req.files || []).map((file) => ({
       filename: file.originalname,
@@ -187,9 +163,8 @@ app.post("/api/order", upload.array("inspirationPhotos", 5), async (req, res) =>
     await transporter.sendMail({
       from: `"BakeWithLinaa Website" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_TO || process.env.EMAIL_USER,
-      subject: `BakeWithLinaa Order Request - ${customerName}`,
-      text: orderSummary,
-      html: makeHtmlEmail(req.body),
+      subject: "BakeWithLinaa Order Request",
+      text: orderText,
       attachments,
     });
 
@@ -201,17 +176,26 @@ app.post("/api/order", upload.array("inspirationPhotos", 5), async (req, res) =>
     console.error("Email send error:", error);
     res.status(500).json({
       ok: false,
-      message: "The order could not be sent. Check the backend terminal for details.",
+      message: "The order could not be sent. Check email settings.",
     });
   }
-});
-const DIST_DIR = path.join(__dirname, "../dist");
+}
 
+app.post("/api/order", upload.any(), handleOrderRequest);
+app.post("/api/send-order", upload.any(), handleOrderRequest);
+
+/*
+  Serve the built React website.
+  This must be AFTER the API routes.
+*/
+
+app.use("/assets", express.static(path.join(DIST_DIR, "assets")));
 app.use(express.static(DIST_DIR));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(DIST_DIR, "index.html"));
 });
+
 app.listen(PORT, () => {
-  console.log(`BakeWithLinaa backend running on http://localhost:${PORT}`);
+  console.log(`BakeWithLinaa backend running on port ${PORT}`);
 });
