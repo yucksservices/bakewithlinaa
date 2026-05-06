@@ -8,7 +8,7 @@ import specialCookiesImg from "./assets/special-cookies.png";
 import cupcakesImg from "./assets/cupcakes.png";
 import meetMeImg from "./assets/meet-me.png";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE = import.meta.env.PROD ? "" : "http://localhost:5000";
 
 const business = {
   name: "BakeWithLinaa",
