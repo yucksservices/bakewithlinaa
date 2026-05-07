@@ -32,6 +32,7 @@ const products = [
     options: [
       { label: "6 inch Heart Cake", serves: "6-8", price: 45 },
       { label: "8 inch Heart Cake", serves: "10-14", price: 60 },
+      { label: "2 tier 6 inch & 8 inch 2 layer heart cake", serves: "35-50", price: 120 },
     ],
   },
   {
@@ -45,6 +46,8 @@ const products = [
       { label: "6 inch Round Cake", serves: "6-8", price: 45 },
       { label: "8 inch Round Cake", serves: "10-14", price: 60 },
       { label: "10 inch Round Cake", serves: "18-24", price: 75 },
+      { label: "2 tier 6 inch & 8 inch 2 layer round cake", serves: "25-30", price: 100 },
+      { label: "2 tier 6 inch & 10 inch 3 layer round cake", serves: "55-75", price: 140 },
     ],
   },
   {
