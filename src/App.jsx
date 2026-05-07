@@ -491,7 +491,7 @@ export default function App() {
               <div><h1>{business.name}</h1><p>{business.tagline}</p></div>
             </a>
             <nav className="nav"><a href="#menu">Menu</a><a href="#customize">Customize</a><a href="#reviews">Reviews</a><a href="#faq">FAQ</a></nav>
-            <a href="#order" className="btn btn-dark">Order Now</a>
+            <a href="#menu" className="btn btn-dark">Order Now</a>
           </div>
         </header>
 
