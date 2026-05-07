@@ -475,6 +475,84 @@ export default function App() {
         .faq-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 34px; } details { background: rgba(255,255,255,.96); border: 1px solid #ffe1ef; border-radius: 26px; padding: 20px; margin-bottom: 14px; box-shadow: 0 10px 28px rgba(255,93,162,.06); } summary { cursor: pointer; font-weight: 1000; font-size: 17px; color: #421627; } details p { color: #6e5562; line-height: 1.7; } .warning { background: #fff9fc; color: #78350f; border: 1px solid #ffd8ea; border-radius: 26px; padding: 20px; line-height: 1.6; }
         .contact-box { background: linear-gradient(135deg, #ff1493, #ff1493); color: white; border-radius: 34px; padding: 34px; display: grid; grid-template-columns: .85fr 1.15fr; gap: 24px; box-shadow: 0 18px 44px rgba(255,93,162,.24); } .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; } .contact-card { background: rgba(255,255,255,.16); border-radius: 24px; padding: 18px; backdrop-filter: blur(8px); } .contact-card div { font-size: 28px; } .contact-card strong { display: block; margin-top: 12px; } .contact-card p { color: rgba(255,255,255,.9); margin-bottom: 0; font-size: 14px; word-break: break-word; line-height: 1.5; }
         .footer { background: rgba(255,255,255,.82); border-top: 1px solid #ffe1ef; padding: 28px 0; } .footer-inner { display: flex; justify-content: space-between; gap: 18px; color: #8c6777; font-weight: 800; font-size: 14px; } .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
+
+        .mobile-quick-nav { display: none; }
+
+        @media (max-width: 600px) {
+          body { padding-bottom: 86px; }
+          .page { overflow: visible; }
+          .container { width: min(100% - 24px, 1180px); }
+          .sparkles { display: none; }
+          .header-inner { padding: 10px 0; }
+          .logo { width: 40px; height: 40px; border-radius: 15px; font-size: 22px; }
+          .brand h1 { font-size: 19px; }
+          .header .btn-dark { padding: 10px 14px; font-size: 12px; }
+          section { padding: 36px 0; }
+          .hero-grid { padding: 34px 0; gap: 22px; }
+          .pill { font-size: 12px; padding: 8px 12px; }
+          .hero h2 { font-size: 40px; line-height: 1; letter-spacing: -0.055em; }
+          .hero-text { font-size: 15px; line-height: 1.55; margin-top: 14px; }
+          .hero-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+          .stats { grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px; }
+          .stat { padding: 12px 6px; border-radius: 18px; }
+          .stat strong { font-size: 18px; line-height: 1.1; }
+          .stat span { font-size: 10px; }
+          .about-card { border-radius: 24px; padding: 10px; gap: 10px; }
+          .about-card img { max-height: 360px; width: 100%; object-fit: contain; }
+          .about-card .featured-box { padding: 16px; border-radius: 20px; }
+          .about-card .featured-box h3 { font-size: 21px; }
+          .about-card .featured-box p { font-size: 13px; line-height: 1.55; }
+          .about-card .featured-box p:nth-of-type(n+2) { display: none; }
+          .section-title { margin-bottom: 20px; }
+          .section-title h2, .split-title h2 { font-size: 30px; }
+          .section-title p, .split-title p { font-size: 14px; line-height: 1.55; }
+          .steps { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+          .step-card { padding: 16px; border-radius: 22px; }
+          .step-top { margin-bottom: 10px; }
+          .step-icon { font-size: 28px; }
+          .step-num { font-size: 24px; }
+          .step-card h3 { font-size: 15px; }
+          .step-card p { display: none; }
+          .menu-head { margin-bottom: 20px; }
+          .controls input, .controls select { padding: 12px 14px; }
+          .cake-grid { gap: 14px; }
+          .cake-card { border-radius: 24px; }
+          .cake-image img { height: 165px; }
+          .badge { top: 12px; left: 12px; padding: 7px 10px; font-size: 11px; }
+          .cake-body { padding: 16px; }
+          .cake-meta { margin-bottom: 8px; }
+          .cake-card h3 { font-size: 21px; }
+          .cake-card p { display: none; }
+          .size-box { margin-top: 12px; padding: 12px; border-radius: 18px; }
+          .size-bottom { margin-top: 8px; font-size: 13px; }
+          .price { font-size: 20px; }
+          .full { margin-top: 12px; }
+          .custom-box { padding: 16px; border-radius: 24px; gap: 12px; }
+          input, select, textarea { padding: 12px 14px; font-size: 14px; border-radius: 15px; }
+          textarea { min-height: 92px; }
+          .order-grid { gap: 20px; }
+          .form-card { padding: 18px; border-radius: 24px; gap: 14px; }
+          .cart { padding: 18px; border-radius: 24px; }
+          .cart-head { padding-bottom: 14px; }
+          .cart-head h2 { font-size: 26px; }
+          .empty-cart { padding: 28px 0; }
+          .cart-item { padding: 14px 0; }
+          .cart-item h3 { font-size: 16px; }
+          .cart-total-box { padding: 16px; border-radius: 20px; }
+          .custom-summary { display: none; }
+          .grand-total { font-size: 22px; }
+          .review-form, .review-card, .empty-reviews { padding: 18px; border-radius: 22px; }
+          .faq-grid { gap: 18px; }
+          details { padding: 16px; border-radius: 20px; }
+          .contact-box { padding: 22px; border-radius: 24px; gap: 16px; }
+          .contact-box h2 { font-size: 30px !important; }
+          .contact-card { padding: 14px; border-radius: 18px; }
+          .footer-inner { flex-direction: column; text-align: center; align-items: center; }
+          .mobile-quick-nav { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 200; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 8px; border-radius: 999px; background: rgba(255,255,255,0.94); border: 1px solid #ffd8ea; box-shadow: 0 12px 34px rgba(255, 20, 147, 0.22); backdrop-filter: blur(12px); }
+          .mobile-quick-nav a { display: flex; align-items: center; justify-content: center; min-height: 44px; border-radius: 999px; background: #ff1493; color: white; font-size: 13px; font-weight: 1000; }
+          .mobile-quick-nav a:nth-child(2) { background: #31121f; }
+        }
+
         @media (max-width: 900px) { .nav { display: none; } .hero-grid, .order-grid, .faq-grid, .contact-box, .review-section-grid { grid-template-columns: 1fr; } .steps, .cake-grid { grid-template-columns: repeat(2, 1fr); } .contact-cards { grid-template-columns: repeat(3, 1fr); } .custom-box { grid-template-columns: 1fr 1fr; } .hero-card img { height: 420px; } .about-card img { height: auto; } .cart { position: static; } }
         @media (max-width: 600px) { .brand p { display: none; } .steps, .cake-grid, .contact-cards, .custom-box, .two, .stats { grid-template-columns: 1fr; } .wide, .fullwide { grid-column: span 1; } .menu-head { align-items: stretch; flex-direction: column; } .controls { flex-direction: column; } .hero h2 { font-size: 46px; } .hero-card img { height: 340px; } .about-card img { height: auto; } .btn { padding: 12px 16px; } .bow-corner { display: none; } }
       `}</style>
@@ -491,7 +569,7 @@ export default function App() {
               <div><h1>{business.name}</h1><p>{business.tagline}</p></div>
             </a>
             <nav className="nav"><a href="#menu">Menu</a><a href="#customize">Customize</a><a href="#reviews">Reviews</a><a href="#faq">FAQ</a></nav>
-            <a href="#menu" className="btn btn-dark">Order Now</a>
+            <a href="#order" className="btn btn-dark">Order Now</a>
           </div>
         </header>
 
@@ -625,6 +703,8 @@ export default function App() {
         </main>
 
         <footer className="footer"><div className="container footer-inner"><div>© {new Date().getFullYear()} {business.name}. All rights reserved.</div><div className="footer-links"><a href="#menu">Menu</a><a href="#customize">Customize</a><a href="#order">Order</a><a href="#contact">Contact</a></div></div></footer>
+
+        <nav className="mobile-quick-nav" aria-label="Mobile quick navigation"><a href="#menu">Menu</a><a href="#customize">Customize</a><a href="#order">Order</a></nav>
       </div>
     </>
   );
