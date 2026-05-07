@@ -101,14 +101,13 @@ const products = [
 
 const categories = ["All", "Cakes", "Cupcakes", "Cookies", "Desserts"];
 const cakeFlavors = ["N/A", "Warm Vanilla", "Rich Fudge Chocolate", "Red Velvet Love", "Birthday Sprinkle", "Spiced Carrot", "Sweet Strawberry"];
-const fillings = ["N/A", "No Filling", "Strawberry +$5", "Nutella +$5", "Cookie Butter +$5", "Bananas +$5", "Cookies of Your Choice +$5"];
+const fillings = ["No Filling", "Strawberry +$5", "Nutella +$5", "Cookie Butter +$5", "Bananas +$5", "Cookies of Your Choice +$5"];
 const frostings = ["N/A", "Butter Cream", "Whipped Cream"];
 const cupcakeFlavors = ["N/A", "Warm Vanilla", "Rich Fudge Chocolate", "Red Velvet Love", "Birthday Sprinkle", "Sweet Strawberry"];
 const cupcakeFillings = ["N/A", "No Filling", "Strawberry", "Nutella", "Cookie Butter", "Bananas", "Cookies of Your Choice"];
 const cupcakeColors = ["N/A", "Pink", "White", "Gold", "Purple", "Baby Blue", "Red", "Pastel Mix", "Custom Colors"];
 const colors = ["Pink", "White", "Gold", "Purple", "Baby Blue", "Red", "Pastel Mix", "Custom Colors"];
 const addOns = [
-  { label: "N/A", price: 0 },
   { label: "No Add Ons", price: 0 },
   { label: "Handmade Bows", price: 0 },
   { label: "Custom Color Bows", price: 5 },
@@ -235,7 +234,7 @@ export default function App() {
   }, [category, search]);
 
   const cakeQuantity = cart.reduce((sum, item) => (item.category === "Cakes" ? sum + item.quantity : sum), 0);
-  const fillingCost = ["N/A", "No Filling"].includes(custom.filling) ? 0 : cakeQuantity * 5;
+  const fillingCost = custom.filling === "No Filling" ? 0 : cakeQuantity * 5;
   const selectedAddOn = addOns.find((item) => item.label === custom.addOn) || addOns[0];
   const addOnCost = selectedAddOn.varies ? 0 : selectedAddOn.price;
   const productSubtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
