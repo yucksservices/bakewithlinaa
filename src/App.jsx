@@ -30,8 +30,8 @@ const products = [
     description: "A cute custom heart cake with your colors, writing, and decoration style.",
     image: heartCakeImg,
     options: [
-      { label: "6 inch Heart Cake", serves: "6-8", price: 45 },
-      { label: "8 inch Heart Cake", serves: "10-14", price: 60 },
+      { label: "6 inch Heart Cake", serves: "6-8", price: 40 },
+      { label: "8 inch Heart Cake", serves: "10-14", price: 55 },
     ],
   },
   {
@@ -42,9 +42,9 @@ const products = [
     description: "Classic round cake, perfect for birthdays, parties, and simple custom designs.",
     image: roundCakeImg,
     options: [
-      { label: "6 inch Round Cake", serves: "6-8", price: 45 },
-      { label: "8 inch Round Cake", serves: "10-14", price: 60 },
-      { label: "10 inch Round Cake", serves: "18-24", price: 75 },
+      { label: "6 inch Round Cake", serves: "6-8", price: 40 },
+      { label: "8 inch Round Cake", serves: "10-14", price: 55 },
+      { label: "10 inch Round Cake", serves: "18-24", price: 65 },
     ],
   },
   {
@@ -100,6 +100,9 @@ const categories = ["All", "Cakes", "Cupcakes", "Cookies", "Desserts"];
 const cakeFlavors = ["Warm Vanilla", "Rich Fudge Chocolate", "Red Velvet Love", "Birthday Sprinkle", "Spiced Carrot", "Sweet Strawberry"];
 const fillings = ["No Filling", "Strawberry +$5", "Nutella +$5", "Cookie Butter +$5", "Bananas +$5", "Cookies of Your Choice +$5"];
 const frostings = ["Butter Cream", "Whipped Cream"];
+const cupcakeFlavors = ["Warm Vanilla", "Rich Fudge Chocolate", "Red Velvet Love", "Birthday Sprinkle", "Sweet Strawberry"];
+const cupcakeFillings = ["No Filling", "Strawberry", "Nutella", "Cookie Butter", "Bananas", "Cookies of Your Choice"];
+const cupcakeColors = ["Pink", "White", "Gold", "Purple", "Baby Blue", "Red", "Pastel Mix", "Custom Colors"];
 const colors = ["Pink", "White", "Gold", "Purple", "Baby Blue", "Red", "Pastel Mix", "Custom Colors"];
 const addOns = [
   { label: "No Add Ons", price: 0 },
@@ -188,6 +191,9 @@ export default function App() {
     frosting: frostings[0],
     color: "Pink",
     messageColor: "Pink",
+    cupcakeFlavor: cupcakeFlavors[0],
+    cupcakeFilling: cupcakeFillings[0],
+    cupcakeColor: cupcakeColors[0],
     addOn: addOns[0].label,
     message: "",
   });
@@ -261,6 +267,12 @@ export default function App() {
       `Colors: ${custom.color || "Not provided"}`,
       `Cake message: ${custom.message || "None"}`,
       `Message color: ${custom.messageColor || "Not provided"}`,
+      "",
+      "Cupcake Customization:",
+      `Cupcake flavor: ${custom.cupcakeFlavor || "Not provided"}`,
+      `Cupcake filling: ${custom.cupcakeFilling || "Not provided"}`,
+      `Cupcake color: ${custom.cupcakeColor || "Not provided"}`,
+      "",
       `Add on: ${addOnText}`,
       "",
       "Inspiration Photos:",
@@ -406,7 +418,7 @@ export default function App() {
         a { color: inherit; text-decoration: none; }
         .page { min-height: 100vh; background: radial-gradient(circle at 20% 10%, rgba(255,255,255,0.85), transparent 18%), radial-gradient(circle at 80% 18%, rgba(255,255,255,0.7), transparent 12%), linear-gradient(180deg, #fff8fc 0%, #fff2f8 40%, #ffeef6 100%); position: relative; overflow: hidden; }
         .container { width: min(1180px, calc(100% - 32px)); margin: 0 auto; position: relative; z-index: 2; }
-        .bow-corner { position: fixed; top: 14px; right: 16px; z-index: 120; width: 58px; height: 58px; display: grid; place-items: center; border-radius: 18px; background: linear-gradient(135deg, #ff1493, #ff1493); color: white; font-size: 28px; box-shadow: 0 10px 25px rgba(255, 93, 162, 0.35); border: 2px solid rgba(255,255,255,0.75); }
+        .bow-corner { display: none; }
         .sparkles { pointer-events: none; position: fixed; inset: 0; z-index: 1; overflow: hidden; }
         .sparkle { position: absolute; color: rgba(255, 120, 180, 0.55); text-shadow: 0 0 12px rgba(255,255,255,0.9); animation: twinkle 3.8s ease-in-out infinite; user-select: none; }
         .s1 { top: 90px; left: 6%; font-size: 22px; animation-delay: 0s; } .s2 { top: 160px; right: 12%; font-size: 18px; animation-delay: .8s; } .s3 { top: 420px; left: 10%; font-size: 16px; animation-delay: 1.1s; } .s4 { top: 620px; right: 18%; font-size: 20px; animation-delay: 1.6s; } .s5 { top: 980px; left: 20%; font-size: 17px; animation-delay: .5s; } .s6 { top: 1240px; right: 9%; font-size: 24px; animation-delay: 1.9s; } .s7 { top: 1520px; left: 8%; font-size: 15px; animation-delay: 1.3s; } .s8 { top: 1860px; right: 16%; font-size: 19px; animation-delay: 2.2s; }
@@ -461,11 +473,10 @@ export default function App() {
         .contact-box { background: linear-gradient(135deg, #ff1493, #ff1493); color: white; border-radius: 34px; padding: 34px; display: grid; grid-template-columns: .85fr 1.15fr; gap: 24px; box-shadow: 0 18px 44px rgba(255,93,162,.24); } .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; } .contact-card { background: rgba(255,255,255,.16); border-radius: 24px; padding: 18px; backdrop-filter: blur(8px); } .contact-card div { font-size: 28px; } .contact-card strong { display: block; margin-top: 12px; } .contact-card p { color: rgba(255,255,255,.9); margin-bottom: 0; font-size: 14px; word-break: break-word; line-height: 1.5; }
         .footer { background: rgba(255,255,255,.82); border-top: 1px solid #ffe1ef; padding: 28px 0; } .footer-inner { display: flex; justify-content: space-between; gap: 18px; color: #8c6777; font-weight: 800; font-size: 14px; } .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
         @media (max-width: 900px) { .nav { display: none; } .hero-grid, .order-grid, .faq-grid, .contact-box, .review-section-grid { grid-template-columns: 1fr; } .steps, .cake-grid { grid-template-columns: repeat(2, 1fr); } .contact-cards { grid-template-columns: repeat(3, 1fr); } .custom-box { grid-template-columns: 1fr 1fr; } .hero-card img { height: 420px; } .about-card img { height: auto; } .cart { position: static; } }
-        @media (max-width: 600px) { .brand p { display: none; } .steps, .cake-grid, .contact-cards, .custom-box, .two, .stats { grid-template-columns: 1fr; } .wide, .fullwide { grid-column: span 1; } .menu-head { align-items: stretch; flex-direction: column; } .controls { flex-direction: column; } .hero h2 { font-size: 46px; } .hero-card img { height: 340px; } .about-card img { height: auto; } .btn { padding: 12px 16px; } .bow-corner { width: 50px; height: 50px; font-size: 24px; } }
+        @media (max-width: 600px) { .brand p { display: none; } .steps, .cake-grid, .contact-cards, .custom-box, .two, .stats { grid-template-columns: 1fr; } .wide, .fullwide { grid-column: span 1; } .menu-head { align-items: stretch; flex-direction: column; } .controls { flex-direction: column; } .hero h2 { font-size: 46px; } .hero-card img { height: 340px; } .about-card img { height: auto; } .btn { padding: 12px 16px; } .bow-corner { display: none; } }
       `}</style>
 
       <div className="page">
-        <div className="bow-corner">🎀</div>
         <div className="sparkles">
           <span className="sparkle s1">✦</span><span className="sparkle s2">✦</span><span className="sparkle s3">✦</span><span className="sparkle s4">✦</span><span className="sparkle s5">✦</span><span className="sparkle s6">✦</span><span className="sparkle s7">✦</span><span className="sparkle s8">✦</span>
         </div>
@@ -545,12 +556,15 @@ export default function App() {
 
           <section id="customize" className="white-section">
             <div className="container">
-              <div className="section-title"><p className="eyebrow">Make it yours</p><h2>Customize your cake</h2><p>These choices apply to cakes in your order. Fillings are an extra $5 per cake item.</p></div>
+              <div className="section-title"><p className="eyebrow">Make it yours</p><h2>Customize your cake</h2><p>Choose cake details, cupcake details, add-ons, colors, message, and inspiration photos.</p></div>
               <div className="custom-box">
                 <label><span>Cake flavor</span><select value={custom.flavor} onChange={(event) => setCustom({ ...custom, flavor: event.target.value })}>{cakeFlavors.map((item) => <option key={item}>{item}</option>)}</select></label>
                 <label><span>Filling</span><select value={custom.filling} onChange={(event) => setCustom({ ...custom, filling: event.target.value })}>{fillings.map((item) => <option key={item}>{item}</option>)}</select><p className="hint">Each filling adds $5 per cake item.</p></label>
                 <label><span>Frosting</span><select value={custom.frosting} onChange={(event) => setCustom({ ...custom, frosting: event.target.value })}>{frostings.map((item) => <option key={item}>{item}</option>)}</select></label>
                 <label><span>Colors</span><input value={custom.color} onChange={(event) => setCustom({ ...custom, color: event.target.value })} placeholder="Example: pink, white, gold, pastel blue" /></label>
+                <label><span>Cupcake flavor</span><select value={custom.cupcakeFlavor} onChange={(event) => setCustom({ ...custom, cupcakeFlavor: event.target.value })}>{cupcakeFlavors.map((item) => <option key={item}>{item}</option>)}</select></label>
+                <label><span>Cupcake filling</span><select value={custom.cupcakeFilling} onChange={(event) => setCustom({ ...custom, cupcakeFilling: event.target.value })}>{cupcakeFillings.map((item) => <option key={item}>{item}</option>)}</select></label>
+                <label><span>Cupcake color</span><select value={custom.cupcakeColor} onChange={(event) => setCustom({ ...custom, cupcakeColor: event.target.value })}>{cupcakeColors.map((item) => <option key={item}>{item}</option>)}</select></label>
                 <label className="wide"><span>Add ons</span><select value={custom.addOn} onChange={(event) => setCustom({ ...custom, addOn: event.target.value })}>{addOns.map((item) => <option key={item.label} value={item.label}>{item.label} • {item.varies ? "Price varies" : item.price === 0 ? "Free" : money(item.price)}</option>)}</select><p className="hint">Topper of your choice price varies and will be confirmed before payment.</p></label>
                 <label className="wide"><span>Cake message</span><input value={custom.message} onChange={(event) => setCustom({ ...custom, message: event.target.value })} placeholder="Example: Happy Birthday Lina" /></label>
                 <label className="wide"><span>Message color</span><input value={custom.messageColor} onChange={(event) => setCustom({ ...custom, messageColor: event.target.value })} placeholder="Example: pink, gold, white, black" /></label>
@@ -569,7 +583,7 @@ export default function App() {
                   <div className="two"><label><span>Pickup date *</span><input type="date" value={customer.pickupDate} onChange={(event) => { const nextDate = event.target.value; const times = getPickupTimes(nextDate); setCustomer({ ...customer, pickupDate: nextDate, pickupTime: times.includes(customer.pickupTime) ? customer.pickupTime : times[0] }); }} /><p className="hint">Please order {business.noticeText} ahead.</p></label><label><span>Pickup time</span><select value={customer.pickupTime} onChange={(event) => setCustomer({ ...customer, pickupTime: event.target.value })}>{getPickupTimes(customer.pickupDate).map((time) => <option key={time}>{time}</option>)}</select></label></div>
                   <label><span>Extra notes</span><textarea value={customer.notes} onChange={(event) => setCustomer({ ...customer, notes: event.target.value })} placeholder="Example: Theme is butterflies, add gold details, send me payment link." /></label>
                   <button type="submit" className="btn btn-pink" disabled={sending || !customer.name || !customer.phone || cart.length === 0}>{sending ? "Sending..." : "Send Email Request"}</button>
-                  <p className="hint">This sends the request directly to {business.email}. Final pickup availability and payment will be confirmed when available via instagram by {business.name}.</p>
+                  <p className="hint">This sends the request directly to {business.email}. Final pickup availability and payment should be confirmed by {business.name}.</p>
                 </form>
               </div>
 
@@ -577,7 +591,7 @@ export default function App() {
                 <div className="cart-head"><div><p>Summary</p><h2>Your order</h2></div><div style={{ fontSize: 34 }}>🛒</div></div>
                 {cart.length === 0 ? <div className="empty-cart"><div>🍰</div><strong>Your order is empty</strong><p>Add something from the menu to get started.</p></div> : <div>{cart.map((item) => <div className="cart-item" key={item.key}><div className="cart-item-top"><div><h3>{item.name}</h3><p>{item.option} • Serves {item.serves}</p><p style={{ color: "#ffb9d6", fontWeight: 900 }}>{money(item.price)} each</p></div><button className="delete-btn" onClick={() => removeItem(item.key)}>Delete</button></div><div className="quantity-row"><div className="quantity"><button onClick={() => updateQuantity(item.key, -1)}>-</button><span>{item.quantity}</span><button onClick={() => updateQuantity(item.key, 1)}>+</button></div><strong>{money(item.price * item.quantity)}</strong></div></div>)}</div>}
                 <div className="cart-total-box"><div className="total-line"><span>Product subtotal</span><span>{money(productSubtotal)}</span></div><div className="total-line"><span>Filling add-on</span><span>{money(fillingCost)}</span></div><div className="total-line"><span>Add-on cost</span><span>{selectedAddOn.varies ? "Price varies" : money(addOnCost)}</span></div><div className="total-line"><span>Subtotal</span><span>{money(subtotal)}</span></div><div className="total-line"><span>Required {business.depositPercent}% deposit</span><span>{money(deposit)}</span></div><div className="total-line"><span>Estimated balance</span><span>{money(balance)}</span></div><div className="grand-total"><span>Total</span><span>{money(subtotal)}</span></div></div>
-                <div className="custom-summary"><p><strong>Cake flavor:</strong> {custom.flavor}</p><p><strong>Filling:</strong> {custom.filling}</p><p><strong>Frosting:</strong> {custom.frosting}</p><p><strong>Colors:</strong> {custom.color || "Not provided"}</p><p><strong>Message color:</strong> {custom.messageColor || "Not provided"}</p><p><strong>Add on:</strong> {custom.addOn}{selectedAddOn.varies ? " (price varies)" : ""}</p><p><strong>Inspiration photos:</strong> {inspirationFiles.length} selected</p></div>
+                <div className="custom-summary"><p><strong>Cake flavor:</strong> {custom.flavor}</p><p><strong>Filling:</strong> {custom.filling}</p><p><strong>Frosting:</strong> {custom.frosting}</p><p><strong>Colors:</strong> {custom.color || "Not provided"}</p><p><strong>Message color:</strong> {custom.messageColor || "Not provided"}</p><p><strong>Cupcake flavor:</strong> {custom.cupcakeFlavor}</p><p><strong>Cupcake filling:</strong> {custom.cupcakeFilling}</p><p><strong>Cupcake color:</strong> {custom.cupcakeColor}</p><p><strong>Add on:</strong> {custom.addOn}{selectedAddOn.varies ? " (price varies)" : ""}</p><p><strong>Inspiration photos:</strong> {inspirationFiles.length} selected</p></div>
                 <div className="success-actions"><button className="btn btn-green" onClick={copyOrder}>Copy Order</button></div>
                 {sendStatus.message && <div className={`status ${sendStatus.type}`}>{sendStatus.message}</div>}
               </aside>
