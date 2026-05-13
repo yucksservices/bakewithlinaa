@@ -30,9 +30,9 @@ const products = [
     description: "A cute custom heart cake with your colors, writing, and decoration style.",
     image: heartCakeImg,
     options: [
-      { label: "6 inch Heart Cake", serves: "6-8", price: 45 },
-      { label: "8 inch Heart Cake", serves: "10-14", price: 60 },
-      { label: "2 tier 6 inch & 8 inch 2 layer heart cake", serves: "35-50", price: 120 },
+      { label: "6 inch Heart Cake", serves: "10-12", price: 45 },
+      { label: "8 inch Heart Cake", serves: "15-18", price: 60 },
+      { label: "2 tier 6 inch & 8 inch 2 layer heart cake", serves: "35-50", price: 140 },
     ],
   },
   {
@@ -43,11 +43,11 @@ const products = [
     description: "Classic round cake, perfect for birthdays, parties, and simple custom designs.",
     image: roundCakeImg,
     options: [
-      { label: "6 inch Round Cake", serves: "6-8", price: 45 },
-      { label: "8 inch Round Cake", serves: "10-14", price: 60 },
-      { label: "10 inch Round Cake", serves: "18-24", price: 75 },
-      { label: "2 tier 6 inch & 8 inch 2 layer round cake", serves: "25-30", price: 100 },
-      { label: "2 tier 6 inch & 10 inch 3 layer round cake", serves: "55-75", price: 140 },
+      { label: "6 inch Round Cake", serves: "10-12", price: 45 },
+      { label: "8 inch Round Cake", serves: "15-18", price: 60 },
+      { label: "10 inch Round Cake", serves: "20-25", price: 75 },
+      { label: "2 tier 6 inch & 8 inch 2 layer round cake", serves: "25-30", price: 120 },
+      { label: "2 tier 6 inch & 10 inch 3 layer round cake", serves: "55-75", price: 160 },
     ],
   },
   {
@@ -76,9 +76,9 @@ const products = [
     ],
   },
   {
-    id: "special-cookies",
-    name: "Special Cookies",
-    category: "Cookies",
+    id: "Loaded-cookies",
+    name: "Loaded Cookies",
+    category: "Loaded Cookies",
     badge: "Smooth & Creamy",
     description: "Loaded specialty cookies with toppings, sold by the dozen.",
     image: specialCookiesImg,
