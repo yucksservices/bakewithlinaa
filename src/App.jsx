@@ -101,11 +101,10 @@ const products = [
 
 const categories = ["All", "Cakes", "Cupcakes", "Cookies", "Desserts"];
 const cakeFlavors = ["N/A", "Warm Vanilla", "Rich Fudge Chocolate", "Red Velvet Love", "Birthday Sprinkle", "Spiced Carrot", "Sweet Strawberry"];
-const fillings = ["No Filling", "Strawberry +$5", "Nutella +$5", "Cookie Butter +$5", "Bananas +$5", "Cookies of Your Choice +$5"];
+const fillings = ["No Filling", "Strawberry +$5", "Nutella +$5", "Bananas +$5", "Cookies of Your Choice +$5"];
 const frostings = ["N/A", "Butter Cream", "Whipped Cream"];
 const cupcakeFlavors = ["N/A", "Warm Vanilla", "Rich Fudge Chocolate", "Red Velvet Love", "Birthday Sprinkle", "Sweet Strawberry"];
-const cupcakeFillings = ["N/A", "No Filling", "Strawberry", "Nutella", "Cookie Butter", "Bananas", "Cookies of Your Choice"];
-const cupcakeColors = ["N/A", "Pink", "White", "Gold", "Purple", "Baby Blue", "Red", "Pastel Mix", "Custom Colors"];
+const cupcakeFillings = ["N/A", "No Filling", "Strawberry +$5", "Nutella +$5", "Bananas +$5", "Cookies of Your Choice +$5"];
 const colors = ["Pink", "White", "Gold", "Purple", "Baby Blue", "Red", "Pastel Mix", "Custom Colors"];
 const addOns = [
   { label: "No Add Ons", price: 0 },
@@ -196,7 +195,7 @@ export default function App() {
     messageColor: "Pink",
     cupcakeFlavor: cupcakeFlavors[0],
     cupcakeFilling: cupcakeFillings[0],
-    cupcakeColor: cupcakeColors[0],
+    cupcakeColor: "N/A",
     addOn: addOns[0].label,
     message: "",
   });
@@ -234,11 +233,13 @@ export default function App() {
   }, [category, search]);
 
   const cakeQuantity = cart.reduce((sum, item) => (item.category === "Cakes" ? sum + item.quantity : sum), 0);
+  const cupcakeQuantity = cart.reduce((sum, item) => (item.category === "Cupcakes" ? sum + item.quantity : sum), 0);
   const fillingCost = custom.filling === "No Filling" ? 0 : cakeQuantity * 5;
+  const cupcakeFillingCost = custom.cupcakeFilling === "N/A" || custom.cupcakeFilling === "No Filling" ? 0 : cupcakeQuantity * 5;
   const selectedAddOn = addOns.find((item) => item.label === custom.addOn) || addOns[0];
   const addOnCost = selectedAddOn.varies ? 0 : selectedAddOn.price;
   const productSubtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const subtotal = productSubtotal + fillingCost + addOnCost;
+  const subtotal = productSubtotal + fillingCost + cupcakeFillingCost + addOnCost;
   const deposit = subtotal > 0 ? Math.round(subtotal * (business.depositPercent / 100)) : 0;
   const balance = subtotal - deposit;
 
@@ -274,6 +275,7 @@ export default function App() {
       "Cupcake Customization:",
       `Cupcake flavor: ${custom.cupcakeFlavor || "Not provided"}`,
       `Cupcake filling: ${custom.cupcakeFilling || "Not provided"}`,
+      `Cupcake filling add-on total: ${money(cupcakeFillingCost)}`,
       `Cupcake color: ${custom.cupcakeColor || "Not provided"}`,
       "",
       `Add on: ${addOnText}`,
@@ -283,6 +285,7 @@ export default function App() {
       "",
       `Product Subtotal: ${money(productSubtotal)}`,
       `Filling Add-on: ${money(fillingCost)}`,
+      `Cupcake Filling Add-on: ${money(cupcakeFillingCost)}`,
       `Add-on Cost: ${selectedAddOn.varies ? "Price varies" : money(addOnCost)}`,
       `Subtotal: ${money(subtotal)}`,
       `${business.depositPercent}% Deposit: ${money(deposit)}`,
@@ -290,7 +293,7 @@ export default function App() {
       "",
       `Notes: ${customer.notes || "None"}`,
     ].join("\n");
-  }, [cart, customer, custom, productSubtotal, fillingCost, selectedAddOn, addOnCost, subtotal, deposit, balance, inspirationFiles]);
+  }, [cart, customer, custom, productSubtotal, fillingCost, cupcakeFillingCost, selectedAddOn, addOnCost, subtotal, deposit, balance, inspirationFiles]);
 
   function addToCart(product) {
     const selectedOption = product.options[selectedOptions[product.id] || 0];
@@ -644,8 +647,8 @@ export default function App() {
                 <label><span>Frosting</span><select value={custom.frosting} onChange={(event) => setCustom({ ...custom, frosting: event.target.value })}>{frostings.map((item) => <option key={item}>{item}</option>)}</select></label>
                 <label><span>Colors</span><input value={custom.color} onChange={(event) => setCustom({ ...custom, color: event.target.value })} placeholder="Example: pink, white, gold, pastel blue" /></label>
                 <label><span>Cupcake flavor</span><select value={custom.cupcakeFlavor} onChange={(event) => setCustom({ ...custom, cupcakeFlavor: event.target.value })}>{cupcakeFlavors.map((item) => <option key={item}>{item}</option>)}</select></label>
-                <label><span>Cupcake filling</span><select value={custom.cupcakeFilling} onChange={(event) => setCustom({ ...custom, cupcakeFilling: event.target.value })}>{cupcakeFillings.map((item) => <option key={item}>{item}</option>)}</select></label>
-                <label><span>Cupcake color</span><select value={custom.cupcakeColor} onChange={(event) => setCustom({ ...custom, cupcakeColor: event.target.value })}>{cupcakeColors.map((item) => <option key={item}>{item}</option>)}</select></label>
+                <label><span>Cupcake filling</span><select value={custom.cupcakeFilling} onChange={(event) => setCustom({ ...custom, cupcakeFilling: event.target.value })}>{cupcakeFillings.map((item) => <option key={item}>{item}</option>)}</select><p className="hint">Each cupcake filling adds $5 per cupcake item.</p></label>
+                <label><span>Cupcake color</span><input value={custom.cupcakeColor} onChange={(event) => setCustom({ ...custom, cupcakeColor: event.target.value })} placeholder="Example: pink, white, gold, pastel blue" /></label>
                 <label className="wide"><span>Add ons</span><select value={custom.addOn} onChange={(event) => setCustom({ ...custom, addOn: event.target.value })}>{addOns.map((item) => <option key={item.label} value={item.label}>{item.label} • {item.varies ? "Price varies" : item.price === 0 ? "Free" : money(item.price)}</option>)}</select><p className="hint">Topper of your choice price varies and will be confirmed before payment.</p></label>
                 <label className="wide"><span>Cake message</span><input value={custom.message} onChange={(event) => setCustom({ ...custom, message: event.target.value })} placeholder="Example: Happy Birthday Lina" /></label>
                 <label className="wide"><span>Message color</span><input value={custom.messageColor} onChange={(event) => setCustom({ ...custom, messageColor: event.target.value })} placeholder="Example: pink, gold, white, black" /></label>
@@ -671,7 +674,7 @@ export default function App() {
               <aside className="cart">
                 <div className="cart-head"><div><p>Summary</p><h2>Your order</h2></div><div style={{ fontSize: 34 }}>🛒</div></div>
                 {cart.length === 0 ? <div className="empty-cart"><div>🍰</div><strong>Your order is empty</strong><p>Add something from the menu to get started.</p></div> : <div>{cart.map((item) => <div className="cart-item" key={item.key}><div className="cart-item-top"><div><h3>{item.name}</h3><p>{item.option} • Serves {item.serves}</p><p style={{ color: "#ffb9d6", fontWeight: 900 }}>{money(item.price)} each</p></div><button className="delete-btn" onClick={() => removeItem(item.key)}>Delete</button></div><div className="quantity-row"><div className="quantity"><button onClick={() => updateQuantity(item.key, -1)}>-</button><span>{item.quantity}</span><button onClick={() => updateQuantity(item.key, 1)}>+</button></div><strong>{money(item.price * item.quantity)}</strong></div></div>)}</div>}
-                <div className="cart-total-box"><div className="total-line"><span>Product subtotal</span><span>{money(productSubtotal)}</span></div><div className="total-line"><span>Filling add-on</span><span>{money(fillingCost)}</span></div><div className="total-line"><span>Add-on cost</span><span>{selectedAddOn.varies ? "Price varies" : money(addOnCost)}</span></div><div className="total-line"><span>Subtotal</span><span>{money(subtotal)}</span></div><div className="total-line"><span>Required {business.depositPercent}% deposit</span><span>{money(deposit)}</span></div><div className="total-line"><span>Estimated balance</span><span>{money(balance)}</span></div><div className="grand-total"><span>Total</span><span>{money(subtotal)}</span></div></div>
+                <div className="cart-total-box"><div className="total-line"><span>Product subtotal</span><span>{money(productSubtotal)}</span></div><div className="total-line"><span>Filling add-on</span><span>{money(fillingCost)}</span></div><div className="total-line"><span>Cupcake filling add-on</span><span>{money(cupcakeFillingCost)}</span></div><div className="total-line"><span>Add-on cost</span><span>{selectedAddOn.varies ? "Price varies" : money(addOnCost)}</span></div><div className="total-line"><span>Subtotal</span><span>{money(subtotal)}</span></div><div className="total-line"><span>Required {business.depositPercent}% deposit</span><span>{money(deposit)}</span></div><div className="total-line"><span>Estimated balance</span><span>{money(balance)}</span></div><div className="grand-total"><span>Total</span><span>{money(subtotal)}</span></div></div>
                 <div className="custom-summary"><p><strong>Cake flavor:</strong> {custom.flavor}</p><p><strong>Filling:</strong> {custom.filling}</p><p><strong>Frosting:</strong> {custom.frosting}</p><p><strong>Colors:</strong> {custom.color || "Not provided"}</p><p><strong>Message color:</strong> {custom.messageColor || "Not provided"}</p><p><strong>Cupcake flavor:</strong> {custom.cupcakeFlavor}</p><p><strong>Cupcake filling:</strong> {custom.cupcakeFilling}</p><p><strong>Cupcake color:</strong> {custom.cupcakeColor}</p><p><strong>Add on:</strong> {custom.addOn}{selectedAddOn.varies ? " (price varies)" : ""}</p><p><strong>Inspiration photos:</strong> {inspirationFiles.length} selected</p></div>
                 <div className="success-actions"><button className="btn btn-green" onClick={copyOrder}>Copy Order</button></div>
                 {sendStatus.message && <div className={`status ${sendStatus.type}`}>{sendStatus.message}</div>}
