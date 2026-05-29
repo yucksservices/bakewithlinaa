@@ -120,13 +120,13 @@ function getPickupTimes(dateString) {
   const date = dateString ? new Date(`${dateString}T12:00:00`) : new Date();
   const day = date.getDay();
 
-  // Sunday, Monday, Friday, Saturday: 2:00 PM - 8:00 PM
+  // Sunday, Monday, Friday, Saturday: 2:00 PM - 7:00 PM
   if ([0, 1, 5, 6].includes(day)) {
-    return ["2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM"];
+    return ["2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM"];
   }
 
-  // Tuesday, Wednesday, Thursday: 10:00 AM - 6:00 PM
-  return ["10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"];
+  // Tuesday, Wednesday, Thursday: 11:00 AM - 6:00 PM
+  return ["11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"];
 }
 
 const faqs = [
