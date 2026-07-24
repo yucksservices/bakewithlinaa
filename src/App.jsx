@@ -101,7 +101,7 @@ const products = [
 
 const categories = ["All", "Cakes", "Cupcakes", "Cookies", "Desserts"];
 const cakeFlavors = ["N/A", "Warm Vanilla", "Rich Fudge Chocolate", "Red Velvet Love", "Birthday Sprinkle", "Spiced Carrot", "Sweet Strawberry", "Oreo", "Biscoff", "Lemon", "Marble"];
-const fillings = ["No Filling", "Strawberry +$5", "Nutella +$5", "Bananas +$5", "Oreo Cream", "Biscoff Butter" ,"Cookies of Your Choice +$5"];
+const fillings = ["No Filling", "Strawberry +$5", "Nutella +$5", "Bananas +$5", "Oreo Cream +$5", "Biscoff Butter +$5" ,"Cookies of Your Choice +$5"];
 const frostings = ["N/A", "Butter Cream", "Whipped Cream"];
 const cupcakeFlavors = ["N/A", "Warm Vanilla", "Rich Fudge Chocolate", "Red Velvet Love", "Birthday Sprinkle", "Sweet Strawberry"];
 const cupcakeFillings = ["N/A", "No Filling", "Strawberry +$5", "Nutella +$5", "Bananas +$5", "Cookies of Your Choice +$5"];
