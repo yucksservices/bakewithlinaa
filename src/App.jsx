@@ -30,9 +30,9 @@ const products = [
     description: "A cute custom heart cake with your colors, writing, and decoration style.",
     image: heartCakeImg,
     options: [
-      { label: "6 inch Heart Cake", serves: "10-12", price: 45 },
-      { label: "8 inch Heart Cake", serves: "15-18", price: 65 },
-      { label: "2 tier 6 inch & 8 inch 2 layer heart cake", serves: "35-50", price: 140 },
+      { label: "6 inch Heart Cake", serves: "10-12", price: 50 },
+      { label: "8 inch Heart Cake", serves: "15-18", price: 80 },
+      { label: "2 tier 6 inch & 8 inch 2 layer heart cake", serves: "35-50", price: 160 },
     ],
   },
   {
@@ -43,11 +43,11 @@ const products = [
     description: "Classic round cake, perfect for birthdays, parties, and simple custom designs.",
     image: roundCakeImg,
     options: [
-      { label: "6 inch Round Cake", serves: "10-12", price: 45 },
-      { label: "8 inch Round Cake", serves: "15-18", price: 65 },
-      { label: "10 inch Round Cake", serves: "20-25", price: 80 },
-      { label: "2 tier 6 inch & 8 inch 2 layer round cake", serves: "25-30", price: 120 },
-      { label: "2 tier 6 inch & 10 inch 3 layer round cake", serves: "55-75", price: 160 },
+      { label: "6 inch Round Cake", serves: "10-12", price: 50 },
+      { label: "8 inch Round Cake", serves: "15-18", price: 80 },
+      { label: "10 inch Round Cake", serves: "20-25", price: 100 },
+      { label: "2 tier 6 inch & 8 inch 2 layer round cake", serves: "25-30", price: 140 },
+      { label: "2 tier 6 inch & 10 inch 3 layer round cake", serves: "55-75", price: 180 },
     ],
   },
   {
@@ -59,7 +59,7 @@ const products = [
     image: dessertsImg,
     options: [
       { label: "Churro Cheesecake", serves: "Tray", price: 40 },
-      { label: "Churro Cheesecake + Fresh Fruit", serves: "Tray", price: 45 },
+      { label: "Churro Cheesecake + Fresh Fruit", serves: "Tray", price: 50 },
     ],
   },
   {
@@ -100,8 +100,8 @@ const products = [
 ];
 
 const categories = ["All", "Cakes", "Cupcakes", "Cookies", "Desserts"];
-const cakeFlavors = ["N/A", "Warm Vanilla", "Rich Fudge Chocolate", "Red Velvet Love", "Birthday Sprinkle", "Spiced Carrot", "Sweet Strawberry"];
-const fillings = ["No Filling", "Strawberry +$5", "Nutella +$5", "Bananas +$5", "Cookies of Your Choice +$5"];
+const cakeFlavors = ["N/A", "Warm Vanilla", "Rich Fudge Chocolate", "Red Velvet Love", "Birthday Sprinkle", "Spiced Carrot", "Sweet Strawberry", "Oreo", "Biscoff", "Lemon", "Marble"];
+const fillings = ["No Filling", "Strawberry +$5", "Nutella +$5", "Bananas +$5", "Oreo Cream", "Biscoff Butter" ,"Cookies of Your Choice +$5"];
 const frostings = ["N/A", "Butter Cream", "Whipped Cream"];
 const cupcakeFlavors = ["N/A", "Warm Vanilla", "Rich Fudge Chocolate", "Red Velvet Love", "Birthday Sprinkle", "Sweet Strawberry"];
 const cupcakeFillings = ["N/A", "No Filling", "Strawberry +$5", "Nutella +$5", "Bananas +$5", "Cookies of Your Choice +$5"];
